@@ -16,6 +16,10 @@ class GameLogic {
         return currPlayer
     }
 
+    fun toggleCurrentPlayer(){
+        currPlayer = 3 - currPlayer
+    }
+
     // Update the board if the move is valid
     fun moveOnBoard(row: Int, col: Int): Boolean {
         if (boardState[row][col] != 0) {
@@ -23,12 +27,6 @@ class GameLogic {
         }
         boardState[row][col] = currPlayer
 
-        if (gameOver() || isBoardFull()) {
-            resetBoard()// If there's a winner or the board is full, reset it
-        }
-        else {
-            currPlayer = 3 - currPlayer// Switch player
-        }
         return true
     }
 
@@ -53,22 +51,23 @@ class GameLogic {
         }
 
     fun gameOver(): Boolean {
+        var previous_player = 3 - currPlayer
         if(
-            (boardState[0][0] == currPlayer && boardState[0][1] == currPlayer && boardState[0][2] == currPlayer)
+            (boardState[0][0] == previous_player && boardState[0][1] == previous_player && boardState[0][2] == previous_player)
             ||
-            (boardState[1][0] == currPlayer && boardState[1][1] == currPlayer && boardState[1][2] == currPlayer)
+            (boardState[1][0] == previous_player && boardState[1][1] == previous_player && boardState[1][2] == previous_player)
             ||
-            (boardState[2][0] == currPlayer && boardState[2][1] == currPlayer && boardState[2][2] == currPlayer)
+            (boardState[2][0] == previous_player && boardState[2][1] == previous_player && boardState[2][2] == previous_player)
             ||
-            (boardState[0][0] == currPlayer && boardState[1][0] == currPlayer && boardState[2][0] == currPlayer)
+            (boardState[0][0] == previous_player && boardState[1][0] == previous_player && boardState[2][0] == previous_player)
             ||
-            (boardState[0][1] == currPlayer && boardState[1][1] == currPlayer && boardState[2][1] == currPlayer)
+            (boardState[0][1] == previous_player && boardState[1][1] == previous_player && boardState[2][1] == previous_player)
             ||
-            (boardState[0][2] == currPlayer && boardState[1][2] == currPlayer && boardState[2][2] == currPlayer)
+            (boardState[0][2] == previous_player && boardState[1][2] == previous_player && boardState[2][2] == previous_player)
             ||
-            (boardState[0][0] == currPlayer && boardState[1][1] == currPlayer && boardState[2][2] == currPlayer)
+            (boardState[0][0] == previous_player && boardState[1][1] == previous_player && boardState[2][2] == previous_player)
             ||
-            (boardState[0][2] == currPlayer && boardState[1][1] == currPlayer && boardState[2][0] == currPlayer)
+            (boardState[0][2] == previous_player && boardState[1][1] == previous_player && boardState[2][0] == previous_player)
             )
         {
             //There is a winner

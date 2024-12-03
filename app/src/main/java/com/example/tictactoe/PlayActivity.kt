@@ -88,24 +88,32 @@ class PlayActivity : AppCompatActivity() {
     fun handleMove(row: Int, col: Int, box: TextView) {
         val playerType = gameLogic.getCurrentPlayer();
 
-        if (gameLogic.moveOnBoard(row,col)){
+        if (gameLogic.moveOnBoard(row, col)) {
             if (playerType == 1) {
                 box.text = "X"
-            }else{
+            } else {
                 box.text = "O"
             }
             box.isClickable = false
         }
-        if(gameLogic.gameOver()) {
-            showToast("Player $playerType wins!")
+
+        if (gameLogic.gameOver()) {
+            showToast("Player ${3 - playerType} wins!")
             showToast("Play Again :)")
+            gameLogic.resetBoard()
             resetBoardUI()
-        }
-        else if (gameLogic.isBoardFull()){
+        } else if (gameLogic.isBoardFull()) {
             showToast("It's a draw!")
             showToast("Play Again :)")
+            gameLogic.resetBoard()
             resetBoardUI()
         }
+        else
+        {
+            // if the game continues, change the player
+            gameLogic.toggleCurrentPlayer()
+        }
+
     }
 
     private fun showToast(message: String) {
