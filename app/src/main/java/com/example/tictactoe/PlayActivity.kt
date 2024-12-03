@@ -49,22 +49,6 @@ class PlayActivity : AppCompatActivity() {
         //setClickListeners()
     }
 
-
-    fun handleMove(row: Int, col: Int, box: TextView) {
-        if (gameLogic.moveOnBoard(row,col)){
-            val playerType = gameLogic.getCurrentPlayer();
-            if (playerType == 1) {
-                box.text = "X"
-            }else{
-                box.text = "O"
-            }
-            box.isClickable = false;
-        }
-        else{
-            //resetBoardUI()
-        }
-    }
-
     private fun resetBoardUI() {
         box1.text = ""
         box2.text = ""
@@ -88,17 +72,31 @@ class PlayActivity : AppCompatActivity() {
         box9.isClickable = true
     }
 
-//    private fun setClickListeners() {
-//        box1.setOnClickListener { handleMove(0, 0, box1) }
-//        box2.setOnClickListener { handleMove(0, 1, box2) }
-//        box3.setOnClickListener { handleMove(0, 2, box3) }
-//        box4.setOnClickListener { handleMove(1, 0, box4) }
-//        box5.setOnClickListener { handleMove(1, 1, box5) }
-//        box6.setOnClickListener { handleMove(1, 2, box6) }
-//        box7.setOnClickListener { handleMove(2, 0, box7) }
-//        box8.setOnClickListener { handleMove(2, 1, box8) }
-//        box9.setOnClickListener { handleMove(2, 2, box9) }
-//    }
+    private fun setClickListeners() {
+        box1.setOnClickListener { handleMove(0, 0, box1) }
+        box2.setOnClickListener { handleMove(0, 1, box2) }
+        box3.setOnClickListener { handleMove(0, 2, box3) }
+        box4.setOnClickListener { handleMove(1, 0, box4) }
+        box5.setOnClickListener { handleMove(1, 1, box5) }
+        box6.setOnClickListener { handleMove(1, 2, box6) }
+        box7.setOnClickListener { handleMove(2, 0, box7) }
+        box8.setOnClickListener { handleMove(2, 1, box8) }
+        box9.setOnClickListener { handleMove(2, 2, box9) }
+    }
 
-    //handleMove
+
+    fun handleMove(row: Int, col: Int, box: TextView) {
+        if (gameLogic.moveOnBoard(row,col)){
+            val playerType = gameLogic.getCurrentPlayer();
+            if (playerType == 1) {
+                box.text = "X"
+            }else{
+                box.text = "O"
+            }
+            box.isClickable = false;
+        }
+        else{
+            //resetBoardUI()
+        }
+    }
 }
