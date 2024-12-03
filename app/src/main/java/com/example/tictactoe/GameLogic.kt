@@ -25,6 +25,10 @@ class GameLogic {
             (boardState[0][1] == currPlayer && boardState[1][1] == currPlayer && boardState[2][1] == currPlayer)
             ||
             (boardState[0][2] == currPlayer && boardState[1][2] == currPlayer && boardState[2][2] == currPlayer)
+            ||
+            (boardState[0][0] == currPlayer && boardState[1][1] == currPlayer && boardState[2][2] == currPlayer)
+            ||
+            (boardState[0][2] == currPlayer && boardState[1][1] == currPlayer && boardState[2][0] == currPlayer)
             )
         {
             //There is a winner
