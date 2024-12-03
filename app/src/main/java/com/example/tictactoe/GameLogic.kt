@@ -52,7 +52,7 @@ class GameLogic {
             currPlayer = 1
         }
 
-    private fun gameOver(): Boolean {
+    fun gameOver(): Boolean {
         if(
             (boardState[0][0] == currPlayer && boardState[0][1] == currPlayer && boardState[0][2] == currPlayer)
             ||

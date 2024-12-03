@@ -6,6 +6,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import android.widget.Toast
 
 class PlayActivity : AppCompatActivity() {
 
@@ -46,7 +47,7 @@ class PlayActivity : AppCompatActivity() {
         box9 = findViewById(R.id.box9)
 
         // Each box needs a listener to keep track of the players' moves
-        //setClickListeners()
+        setClickListeners()
     }
 
     private fun resetBoardUI() {
@@ -84,19 +85,30 @@ class PlayActivity : AppCompatActivity() {
         box9.setOnClickListener { handleMove(2, 2, box9) }
     }
 
-
     fun handleMove(row: Int, col: Int, box: TextView) {
+        val playerType = gameLogic.getCurrentPlayer();
+
         if (gameLogic.moveOnBoard(row,col)){
-            val playerType = gameLogic.getCurrentPlayer();
             if (playerType == 1) {
                 box.text = "X"
             }else{
                 box.text = "O"
             }
-            box.isClickable = false;
+            box.isClickable = false
         }
-        else{
-            //resetBoardUI()
+        if(gameLogic.gameOver()) {
+            showToast("Player $playerType wins!")
+            showToast("Play Again :)")
+            resetBoardUI()
         }
+        else if (gameLogic.isBoardFull()){
+            showToast("It's a draw!")
+            showToast("Play Again :)")
+            resetBoardUI()
+        }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }
