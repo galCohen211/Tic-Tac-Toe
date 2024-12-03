@@ -44,5 +44,24 @@ class PlayActivity : AppCompatActivity() {
         box7 = findViewById(R.id.box7)
         box8 = findViewById(R.id.box8)
         box9 = findViewById(R.id.box9)
+
+        // Each box needs a listener to keep track of the players' moves
+        //setClickListeners()
+    }
+
+
+    fun handleMove(row: Int, col: Int, box: TextView) {
+        if (gameLogic.moveOnBoard(row,col)){
+            val playerType = gameLogic.getCurrentPlayer();
+            if (playerType == 1) {
+                box.text = "X"
+            }else{
+                box.text = "O"
+            }
+            box.isClickable = false;
+        }
+        else{
+            //resetBoardUI()
+        }
     }
 }

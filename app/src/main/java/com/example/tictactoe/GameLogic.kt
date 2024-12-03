@@ -11,9 +11,39 @@ class GameLogic {
         intArrayOf(0, 0, 0),
         intArrayOf(0, 0, 0)
     )
-    
+
+    fun getCurrentPlayer():Int{
+        return currPlayer
+    }
+
+    // Update the board if the move is valid
+    fun moveOnBoard(row: Int, col: Int): Boolean {
+        if (boardState[row][col] != 0) {
+            return false// Checks if move is valid
+        }
+        boardState[row][col] = currPlayer
+
+        if (gameOver() || isBoardFull()) {
+            resetBoard()// If there's a winner or the board is full, reset it
+        }
+        else {
+            currPlayer = 3 - currPlayer// Switch player
+        }
+        return true
+    }
+
+    fun isBoardFull(): Boolean{
+        for (row in boardState ){
+            for(cell in row){
+                if(cell == 0)
+                    return false// Board is not full
+            }
+        }
+        return true// Board is full
+    }
+
         //Reset the board
-    fun restBoard() {
+    fun resetBoard() {
             boardState = arrayOf(
                 intArrayOf(0, 0, 0),
                 intArrayOf(0, 0, 0),
