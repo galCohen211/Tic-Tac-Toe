@@ -45,4 +45,27 @@ class PlayActivity : AppCompatActivity() {
         box8 = findViewById(R.id.box8)
         box9 = findViewById(R.id.box9)
     }
+
+    private fun resetBoardUI() {
+        box1.text = ""
+        box2.text = ""
+        box3.text = ""
+        box4.text = ""
+        box5.text = ""
+        box6.text = ""
+        box7.text = ""
+        box8.text = ""
+        box9.text = ""
+
+        // Re-enable clicks
+        box1.isClickable = true
+        box2.isClickable = true
+        box3.isClickable = true
+        box4.isClickable = true
+        box5.isClickable = true
+        box6.isClickable = true
+        box7.isClickable = true
+        box8.isClickable = true
+        box9.isClickable = true
+    }
 }
