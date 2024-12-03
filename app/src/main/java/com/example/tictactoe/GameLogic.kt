@@ -11,4 +11,14 @@ class GameLogic {
         intArrayOf(0, 0, 0),
         intArrayOf(0, 0, 0)
     )
+
+    //Reset the board
+    fun restBoard(){
+        boardState = arrayOf(
+            intArrayOf(0, 0, 0),
+            intArrayOf(0, 0, 0),
+            intArrayOf(0, 0, 0)
+        )
+        currPlayer = 1
+    }
 }
