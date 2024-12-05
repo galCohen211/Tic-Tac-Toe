@@ -58,6 +58,7 @@ class PlayActivity : AppCompatActivity() {
         //new add
         playAgain.setOnClickListener {
             playAgain.visibility = View.GONE
+            resetBoardUI()
         }
 
         // Each box needs a listener to keep track of the players' moves
@@ -74,17 +75,7 @@ class PlayActivity : AppCompatActivity() {
         box7.text = ""
         box8.text = ""
         box9.text = ""
-
-        // Re-enable clicks
-        box1.isClickable = true
-        box2.isClickable = true
-        box3.isClickable = true
-        box4.isClickable = true
-        box5.isClickable = true
-        box6.isClickable = true
-        box7.isClickable = true
-        box8.isClickable = true
-        box9.isClickable = true
+        toggleBoxes(true)
     }
 
     private fun toggleBoxes(is_enabled: Boolean)
@@ -133,13 +124,12 @@ class PlayActivity : AppCompatActivity() {
             playAgain.visibility = View.VISIBLE
             gameLogic.resetBoard()
             toggleBoxes(false)
-            //resetBoardUI()
+
         } else if (gameLogic.isBoardFull()) {
             showToast("It's a draw!")
             playAgain.visibility = View.VISIBLE
             gameLogic.resetBoard()
             toggleBoxes(false)
-            //resetBoardUI()
         } else {
             gameLogic.toggleCurrentPlayer()
         }
