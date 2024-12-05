@@ -2,11 +2,12 @@ package com.example.tictactoe
 
 import android.os.Bundle
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import android.widget.Toast
+
 
 class PlayActivity : AppCompatActivity() {
 
@@ -73,6 +74,18 @@ class PlayActivity : AppCompatActivity() {
         box9.isClickable = true
     }
 
+    private fun toggleBoxes(is_enabled: Boolean)
+    {
+        box1.isEnabled = is_enabled
+        box2.isEnabled = is_enabled
+        box3.isEnabled = is_enabled
+        box4.isEnabled = is_enabled
+        box5.isEnabled = is_enabled
+        box6.isEnabled = is_enabled
+        box7.isEnabled = is_enabled
+        box8.isEnabled = is_enabled
+        box9.isEnabled = is_enabled
+    }
     private fun setClickListeners() {
         box1.setOnClickListener { handleMove(0, 0, box1) }
         box2.setOnClickListener { handleMove(0, 1, box2) }
@@ -83,6 +96,10 @@ class PlayActivity : AppCompatActivity() {
         box7.setOnClickListener { handleMove(2, 0, box7) }
         box8.setOnClickListener { handleMove(2, 1, box8) }
         box9.setOnClickListener { handleMove(2, 2, box9) }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     fun handleMove(row: Int, col: Int, box: TextView) {
@@ -98,25 +115,19 @@ class PlayActivity : AppCompatActivity() {
         }
 
         if (gameLogic.gameOver()) {
-            showToast("Player ${3 - playerType} wins!")
+            showToast("Player $playerType wins!")
             showToast("Play Again :)")
             gameLogic.resetBoard()
-            resetBoardUI()
+            toggleBoxes(false)
+            //resetBoardUI()
         } else if (gameLogic.isBoardFull()) {
             showToast("It's a draw!")
             showToast("Play Again :)")
             gameLogic.resetBoard()
-            resetBoardUI()
-        }
-        else
-        {
-            // if the game continues, change the player
+            toggleBoxes(false)
+            //resetBoardUI()
+        } else {
             gameLogic.toggleCurrentPlayer()
         }
-
-    }
-
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }
