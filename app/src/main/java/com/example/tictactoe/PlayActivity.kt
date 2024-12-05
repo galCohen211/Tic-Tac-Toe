@@ -1,6 +1,8 @@
 package com.example.tictactoe
 
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -22,6 +24,10 @@ class PlayActivity : AppCompatActivity() {
     private lateinit var box7: TextView
     private lateinit var box8: TextView
     private lateinit var box9: TextView
+    //new add
+    private lateinit var playAgain: Button
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +52,13 @@ class PlayActivity : AppCompatActivity() {
         box7 = findViewById(R.id.box7)
         box8 = findViewById(R.id.box8)
         box9 = findViewById(R.id.box9)
+        //new add
+        playAgain = findViewById<Button>(R.id.play_again_button)
+
+        //new add
+        playAgain.setOnClickListener {
+            playAgain.visibility = View.GONE
+        }
 
         // Each box needs a listener to keep track of the players' moves
         setClickListeners()
@@ -117,12 +130,13 @@ class PlayActivity : AppCompatActivity() {
         if (gameLogic.gameOver()) {
             showToast("Player $playerType wins!")
             showToast("Play Again :)")
+            playAgain.visibility = View.VISIBLE
             gameLogic.resetBoard()
             toggleBoxes(false)
             //resetBoardUI()
         } else if (gameLogic.isBoardFull()) {
             showToast("It's a draw!")
-            showToast("Play Again :)")
+            playAgain.visibility = View.VISIBLE
             gameLogic.resetBoard()
             toggleBoxes(false)
             //resetBoardUI()
