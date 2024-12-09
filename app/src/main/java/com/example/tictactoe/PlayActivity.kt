@@ -115,7 +115,7 @@ class PlayActivity : AppCompatActivity() {
             } else {
                 box.text = "O"
             }
-            box.isClickable = false
+            box.isEnabled = false
         }
 
         if (gameLogic.gameOver()) {
