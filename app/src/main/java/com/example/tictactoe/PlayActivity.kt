@@ -1,11 +1,15 @@
 package com.example.tictactoe
 
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+
 
 class PlayActivity : AppCompatActivity() {
 
@@ -20,6 +24,10 @@ class PlayActivity : AppCompatActivity() {
     private lateinit var box7: TextView
     private lateinit var box8: TextView
     private lateinit var box9: TextView
+    //new add
+    private lateinit var playAgain: Button
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +52,17 @@ class PlayActivity : AppCompatActivity() {
         box7 = findViewById(R.id.box7)
         box8 = findViewById(R.id.box8)
         box9 = findViewById(R.id.box9)
+        //new add
+        playAgain = findViewById<Button>(R.id.play_again_button)
+
+        //new add
+        playAgain.setOnClickListener {
+            playAgain.visibility = View.GONE
+            resetBoardUI()
+        }
+
+        // Each box needs a listener to keep track of the players' moves
+        setClickListeners()
     }
 
     private fun resetBoardUI() {
@@ -56,30 +75,63 @@ class PlayActivity : AppCompatActivity() {
         box7.text = ""
         box8.text = ""
         box9.text = ""
-
-        // Re-enable clicks
-        box1.isClickable = true
-        box2.isClickable = true
-        box3.isClickable = true
-        box4.isClickable = true
-        box5.isClickable = true
-        box6.isClickable = true
-        box7.isClickable = true
-        box8.isClickable = true
-        box9.isClickable = true
+        toggleBoxes(true)
     }
 
-//    private fun setClickListeners() {
-//        box1.setOnClickListener { handleMove(0, 0, box1) }
-//        box2.setOnClickListener { handleMove(0, 1, box2) }
-//        box3.setOnClickListener { handleMove(0, 2, box3) }
-//        box4.setOnClickListener { handleMove(1, 0, box4) }
-//        box5.setOnClickListener { handleMove(1, 1, box5) }
-//        box6.setOnClickListener { handleMove(1, 2, box6) }
-//        box7.setOnClickListener { handleMove(2, 0, box7) }
-//        box8.setOnClickListener { handleMove(2, 1, box8) }
-//        box9.setOnClickListener { handleMove(2, 2, box9) }
-//    }
+    private fun toggleBoxes(is_enabled: Boolean)
+    {
+        box1.isEnabled = is_enabled
+        box2.isEnabled = is_enabled
+        box3.isEnabled = is_enabled
+        box4.isEnabled = is_enabled
+        box5.isEnabled = is_enabled
+        box6.isEnabled = is_enabled
+        box7.isEnabled = is_enabled
+        box8.isEnabled = is_enabled
+        box9.isEnabled = is_enabled
+    }
+    private fun setClickListeners() {
+        box1.setOnClickListener { handleMove(0, 0, box1) }
+        box2.setOnClickListener { handleMove(0, 1, box2) }
+        box3.setOnClickListener { handleMove(0, 2, box3) }
+        box4.setOnClickListener { handleMove(1, 0, box4) }
+        box5.setOnClickListener { handleMove(1, 1, box5) }
+        box6.setOnClickListener { handleMove(1, 2, box6) }
+        box7.setOnClickListener { handleMove(2, 0, box7) }
+        box8.setOnClickListener { handleMove(2, 1, box8) }
+        box9.setOnClickListener { handleMove(2, 2, box9) }
+    }
 
-    //handleMove
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    fun handleMove(row: Int, col: Int, box: TextView) {
+        val playerType = gameLogic.getCurrentPlayer();
+
+        if (gameLogic.moveOnBoard(row, col)) {
+            if (playerType == 1) {
+                box.text = "X"
+            } else {
+                box.text = "O"
+            }
+            box.isEnabled = false
+        }
+
+        if (gameLogic.gameOver()) {
+            showToast("Player $playerType wins!")
+            showToast("Play Again :)")
+            playAgain.visibility = View.VISIBLE
+            gameLogic.resetBoard()
+            toggleBoxes(false)
+
+        } else if (gameLogic.isBoardFull()) {
+            showToast("It's a draw!")
+            playAgain.visibility = View.VISIBLE
+            gameLogic.resetBoard()
+            toggleBoxes(false)
+        } else {
+            gameLogic.toggleCurrentPlayer()
+        }
+    }
 }
